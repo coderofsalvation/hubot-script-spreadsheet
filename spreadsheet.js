@@ -70,9 +70,10 @@ module.exports = function(robot) {
      return msg.send(shortname+" saved");
   });
   
-  robot.respond(/spreadsheet show (\w+)( \w+)?$/i, function(msg) {
-     var name   = msg.match[1];
-     var search = msg.match.length > 2 ? msg.match[2].substr(1,msg.match[2].length-1) : false;  
+  robot.respond(/spreadsheet show (.*)/i, function(msg) {
+     var parts  = msg.match[1].split(" ");
+     var name   = parts[0];
+     var search = parts.length > 1 ? parts[1].substr(1,parts[1].length-1) : false;  
      var items = getItems();
      var data  = items[name];
      if( !data ) return msg.send(name+" was not found");
@@ -86,7 +87,7 @@ module.exports = function(robot) {
        username: process.env.GOOGLE_SPREADSHEET_LOGIN,
        password: process.env.GOOGLE_SPREADSHEET_PASSWD,
      }, function sheetReady(err, spreadsheet) {
-       spreadsheet.receive(function(err, rows, info) {
+       spreadsheet.receive({ getValues: true },function(err, rows, info) {
          if(err) throw err;
          var t     = new Table; 
          var columns = rows[data.columnrow];
