@@ -3,7 +3,9 @@ hubot-script-spreadsheet
 
 hubot (query) interface to google spreadsheet (*with* authentication)
 
-<img alt="" src="https://raw.githubusercontent.com/coderofsalvation/hubot-script-spreadsheet/master/.res/cat"/>
+<img alt="" src="https://github.com/coderofsalvation/hubot-script-spreadsheet/blob/master/.res/cat.gif"/>
+
+A cat gif, no project can live without it!
 
 ### Example
 
