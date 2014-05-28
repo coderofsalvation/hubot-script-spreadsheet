@@ -106,7 +106,7 @@ module.exports = function(robot) {
            }
            if(!empty) t.newRow();
          }
-         return msg.send( t.toString()+"\nsee all results: "+data.url);
+         return msg.send( t.toString()+"\nsee all results @ "+data.url);
        });
      });
   });
