@@ -12,7 +12,7 @@ module.exports = function(robot) {
   var Url         = require('url');
   var ITEMS_KEY   = "spreadsheet_urls";
   var Table       = require('easy-table');
-  var MAXROWS     = 6; // prevent flooding
+  var MAXROWS     = 60; // prevent flooding
 
   function nickname(msg, match) {
       if (!match || match.toLowerCase().trim() === "me") {
@@ -74,7 +74,7 @@ module.exports = function(robot) {
      var parts  = msg.match[1].split(" ");
      var name   = parts[0];
      if( name == "delete" || name == "save" ) return;
-     var search = parts.length > 1 ? parts[1].substr(1,parts[1].length-1) : false;  
+     var search = parts.length > 1 ? parts[1] : false; //parts[1].substr(1,parts[1].length-1) : false;  
      var items = getItems();
      var data  = items[name];
      if( !data ) return msg.send(name+" was not found");
@@ -91,9 +91,12 @@ module.exports = function(robot) {
        spreadsheet.receive({ getValues: true },function(err, rows, info) {
          if(err) throw err;
          var t     = new Table; 
+         var nrows = 0;
+         for( i in rows ) nrows++;
          var columns = rows[data.columnrow];
          var start = parseInt(data.columnrow)+1;
-         for( i = start; i < start+MAXROWS; i++ ){
+         var end   = search ? nrows-1 : start+MAXROWS;
+         for( i = start; i < end; i++ ){
            var empty=true;
            for( column in columns ){
              if( rows[i] != undefined && ( !search || rowContains(rows[i],search) ) ){
@@ -103,7 +106,7 @@ module.exports = function(robot) {
            }
            if(!empty) t.newRow();
          }
-         return msg.send(t.toString()+"\nsource: "+data.url);
+         return msg.send( t.toString()+"\nsee all results: "+data.url);
        });
      });
   });
