@@ -20,12 +20,13 @@ Simple:
     
     source: https://docs.google.com/spreadsheet/ccc?key=sdfsdfsdfsdf..
 
-Searchquery:
+regex searchquery:
     
-    hubot> hubot spreadsheet myspreadsheet awesome
+    hubot> hubot spreadsheet myspreadsheet awesome|book
     Product Id  Description            Price, USD
     ----------  ---------------------  ----------
     123123      Something awesome         1000.00
+    245452      Very interesting book       11.45
     
     source: https://docs.google.com/spreadsheet/ccc?key=sdfsdfsdfsdf..
 
@@ -49,5 +50,5 @@ then:
 
      hubot spreadsheet                                 # shows usage + available sheets
      hubot spreadsheet myspreadsheet                   # displays sheet
-     hubot spreadsheet myspreadsheet foo               # displays sheet entries which match "foo"
+     hubot spreadsheet myspreadsheet <regex>           # displays sheet entries which match "foo"
      hubot spreadsheet del myspreadsheet               # delete
