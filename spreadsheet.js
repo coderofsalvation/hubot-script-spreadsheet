@@ -33,9 +33,9 @@ module.exports = function(robot) {
   robot.respond(/spreadsheet$/i, function(msg) {
      var items = getItems();
      var str  = "shows/queries spreadsheets\n";
-     str += "usage: "+ robot.name + " save <idname> <spreadsheetname>|<sheet>|<columnnames rownumber>|<url>\n";
-     str += "       "+ robot.name + " del  <sheet>\n";
-     str += "       "+ robot.name + " show <sheet> [searchstring]\n";
+     str += "usage: "+ robot.name + " <name> [searchstring]\n";
+     str += "       "+ robot.name + " save <name> <spreadsheetname>|<sheet>|<columnnames rownumber>|<url>\n";
+     str += "       "+ robot.name + " delete  <name>\n";
      str += "\navailable sheets:";
      var sheets = [];
      for( i in items ) sheets.push(i);
@@ -70,9 +70,10 @@ module.exports = function(robot) {
      return msg.send(shortname+" saved");
   });
   
-  robot.respond(/spreadsheet show (.*)/i, function(msg) {
+  robot.respond(/spreadsheet (.*)/i, function(msg) {
      var parts  = msg.match[1].split(" ");
      var name   = parts[0];
+     if( name == "delete" || name == "save" ) return;
      var search = parts.length > 1 ? parts[1].substr(1,parts[1].length-1) : false;  
      var items = getItems();
      var data  = items[name];
@@ -109,7 +110,7 @@ module.exports = function(robot) {
 
   function rowContains( row, searchstr ){
     for( col in row )
-      if( row[col].match( new RegExp(searchstr,"gi") ) ) return true; 
+      if( String(row[col]).match( new RegExp(searchstr,"gi") ) ) return true; 
     return false;
   }
 
