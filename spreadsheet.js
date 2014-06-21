@@ -88,6 +88,7 @@ module.exports = function(robot) {
        username: process.env.GOOGLE_SPREADSHEET_LOGIN,
        password: process.env.GOOGLE_SPREADSHEET_PASSWD,
      }, function sheetReady(err, spreadsheet) {
+       if( spreadsheet == null ) return msg.send("cannot find sheet");
        spreadsheet.receive({ getValues: true },function(err, rows, info) {
          if(err) throw err;
          var t     = new Table; 
