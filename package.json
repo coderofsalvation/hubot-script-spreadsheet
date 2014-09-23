@@ -1,6 +1,6 @@
 {
   "name": "hubot-script-spreadsheet",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "(query) interface to google spreadsheet (with authentication)",
   "main": "index.coffee",
   "scripts": {

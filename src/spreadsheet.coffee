@@ -1,12 +1,13 @@
 # Description:
 #   hubot (query) interface to google spreadsheet (*with* authentication)
-#   
-# Commands:
-#   hubot spreadsheet - commands to query google spreadsheets
 #
 # more info/usage see: https://github.com/coderofsalvation/hubot-script-spreadsheet
 #
 # Author: coder of salvation
+#   
+# Commands:
+#   hubot spreadsheet - commands to query google spreadsheets
+# 
 module.exports = (robot) ->
   # prevent flooding
   nickname = (msg, match) ->
