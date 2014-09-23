@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "url":"",
+    "easy-table":"",
     "edit-google-spreadsheet":""
   },
   "keywords": [
