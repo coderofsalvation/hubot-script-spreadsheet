@@ -24,9 +24,11 @@ module.exports = (robot) ->
   # Choose from 1 of the 3 authentication methods:
   #    1. Username and Password
   rowContains = (row, searchstr) ->
+    regexString = new RegExp(searchstr,"i")
     for col of row
-      continue
-    false
+      if String(row[col]).match(regexString)
+        return true        
+    return false
   Spreadsheet = require("edit-google-spreadsheet")
   Url = require("url")
   ITEMS_KEY = "spreadsheet_urls"
