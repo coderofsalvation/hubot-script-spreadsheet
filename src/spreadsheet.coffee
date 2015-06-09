@@ -106,8 +106,8 @@ module.exports = (robot) ->
         i = start
         while i < end
           empty = true
-          for column of columns
-            if rows[i]? and (not search or rowContains(rows[i], search))
+          if rows[i]? and (not search or rowContains(rows[i], search))
+            for column of columns
               t.cell columns[column], (if rows[i][column]? then rows[i][column] else "")
               empty = false
           t.newRow()  unless empty
