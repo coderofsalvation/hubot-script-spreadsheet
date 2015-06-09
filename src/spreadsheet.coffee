@@ -84,8 +84,10 @@ module.exports = (robot) ->
       debug: true
       spreadsheetName: data.name
       worksheetName: data.sheet
-      username: process.env.GOOGLE_SPREADSHEET_LOGIN
-      password: process.env.GOOGLE_SPREADSHEET_PASSWD
+      oauth2: 
+        client_id: #Get from Google Developers Console
+        client_secret: #Get from Google Developers Console
+        refresh_token: #Use get_oauth2_permissions.js in edit-google-spreadsheet mod 
     , sheetReady = (err, spreadsheet) ->
       return msg.send("cannot find sheet")  unless spreadsheet?
       spreadsheet.receive
