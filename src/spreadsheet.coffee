@@ -24,9 +24,11 @@ module.exports = (robot) ->
   # Choose from 1 of the 3 authentication methods:
   #    1. Username and Password
   rowContains = (row, searchstr) ->
+    regexString = new RegExp(searchstr,"i")
     for col of row
-      continue
-    false
+      if String(row[col]).match(regexString)
+        return true        
+    return false
   Spreadsheet = require("edit-google-spreadsheet")
   Url = require("url")
   ITEMS_KEY = "spreadsheet_urls"
@@ -84,8 +86,10 @@ module.exports = (robot) ->
       debug: true
       spreadsheetName: data.name
       worksheetName: data.sheet
-      username: process.env.GOOGLE_SPREADSHEET_LOGIN
-      password: process.env.GOOGLE_SPREADSHEET_PASSWD
+      oauth2: 
+        client_id: #Get from Google Developers Console
+        client_secret: #Get from Google Developers Console
+        refresh_token: #Use get_oauth2_permissions.js in edit-google-spreadsheet mod 
     , sheetReady = (err, spreadsheet) ->
       return msg.send("cannot find sheet")  unless spreadsheet?
       spreadsheet.receive
@@ -102,8 +106,8 @@ module.exports = (robot) ->
         i = start
         while i < end
           empty = true
-          for column of columns
-            if rows[i]? and (not search or rowContains(rows[i], search))
+          if rows[i]? and (not search or rowContains(rows[i], search))
+            for column of columns
               t.cell columns[column], (if rows[i][column]? then rows[i][column] else "")
               empty = false
           t.newRow()  unless empty
